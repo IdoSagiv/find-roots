@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FindRoots</string>
+    <string name="input_number_edit_text_hint">הכנס מספר</string>
+    <string name="calculate_roots_button_text">חשב שורש</string>
+</resources>

@@ -7,19 +7,19 @@ import android.util.Log;
 public class CalculateRootsService extends IntentService {
 
 
-  public CalculateRootsService() {
-    super("CalculateRootsService");
-  }
-
-  @Override
-  protected void onHandleIntent(Intent intent) {
-    if (intent == null) return;
-    long timeStartMs = System.currentTimeMillis();
-    long numberToCalculateRootsFor = intent.getLongExtra("number_for_service", 0);
-    if (numberToCalculateRootsFor <= 0) {
-      Log.e("CalculateRootsService", "can't calculate roots for non-positive input" + numberToCalculateRootsFor);
-      return;
+    public CalculateRootsService() {
+        super("CalculateRootsService");
     }
+
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        if (intent == null) return;
+        long timeStartMs = System.currentTimeMillis();
+        long numberToCalculateRootsFor = intent.getLongExtra("number_for_service", 0);
+        if (numberToCalculateRootsFor <= 0) {
+            Log.e("CalculateRootsService", "can't calculate roots for non-positive input" + numberToCalculateRootsFor);
+            return;
+        }
     /*
     TODO:
      calculate the roots.
@@ -41,5 +41,5 @@ public class CalculateRootsService extends IntentService {
        for input "829851628752296034247307144300617649465159", after 20 seconds give up
 
      */
-  }
+    }
 }

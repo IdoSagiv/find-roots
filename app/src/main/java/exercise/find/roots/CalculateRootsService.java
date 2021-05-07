@@ -23,12 +23,13 @@ public class CalculateRootsService extends IntentService {
             return;
         }
 
-        // deals with even number
+        // private case for even numbers
         if (numberToCalculateRootsFor % 2 == 0) {
             sendFoundBroadcast(numberToCalculateRootsFor, 2);
             return;
         }
 
+        // search for roots
         for (int i = 3; i < Math.sqrt(numberToCalculateRootsFor) + 1; i += 2) {
             if (numberToCalculateRootsFor % i == 0) {
                 sendFoundBroadcast(numberToCalculateRootsFor, i);
@@ -66,6 +67,7 @@ public class CalculateRootsService extends IntentService {
 
 
     private void sendFoundBroadcast(long origNum, long root1) {
+        Log.e("CalculateRootsService", "calculated roots for " + origNum + " successfully");
         Intent intent = new Intent("found_roots");
         intent.putExtra("original_number", origNum);
         intent.putExtra("root1", root1);
@@ -74,9 +76,11 @@ public class CalculateRootsService extends IntentService {
     }
 
     private void sendStopCalcBroadcast(long origNum) {
+        long sec = TimeUnit.MILLISECONDS.toSeconds(timeToCalcMs);
+        Log.e("CalculateRootsService", "failed to calculate roots for " + origNum + " in " + sec + " seconds");
         Intent intent = new Intent("stopped_calculations");
         intent.putExtra("original_number", origNum);
-        intent.putExtra("time_until_give_up_seconds", TimeUnit.MILLISECONDS.toSeconds(timeToCalcMs));
+        intent.putExtra("time_until_give_up_seconds", sec);
         sendBroadcast(intent);
     }
 

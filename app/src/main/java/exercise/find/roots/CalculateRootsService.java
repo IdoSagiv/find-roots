@@ -67,11 +67,11 @@ public class CalculateRootsService extends IntentService {
     }
 
     private double milliToRoundedSec(long millis) {
-        return round3decimals(millis / 1000.0);
+        return round3decimals(millis / 1000d);
     }
 
     private double round3decimals(double n) {
-        return Math.round(n * 1000) / 1000.0d;
+        return Math.round(n * 1000) / 1000d;
     }
 
 }

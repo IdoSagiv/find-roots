@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 if (incomingIntent == null || !incomingIntent.getAction().equals("found_roots"))
                     return;
                 // success finding roots!
-                endCalculationChangeStates();
+                endCalculationChangeStates(true);
                 Intent successIntent = new Intent(MainActivity.this, SuccessScreenActivity.class);
                 successIntent.putExtra("original_number", incomingIntent.getLongExtra("original_number", -1));
                 successIntent.putExtra("root1", incomingIntent.getLongExtra("root1", -1));
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 if (incomingIntent == null || !incomingIntent.getAction().equals("stopped_calculations"))
                     return;
                 // failed finding roots!
-                endCalculationChangeStates();
+                endCalculationChangeStates(false);
 
                 long abortedTime = incomingIntent.getLongExtra("time_until_give_up_seconds", -1);
                 Toast.makeText(MainActivity.this,
@@ -151,13 +151,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void endCalculationChangeStates() {
-        // ToDo: keep old value? or reset the editText?
+    private void endCalculationChangeStates(boolean newInput) {
         progressBar.setVisibility(View.GONE);
-        editTextUserInput.setText("");
         editTextUserInput.setEnabled(true);
-        buttonCalculateRoots.setEnabled(false);
-//        buttonCalculateRoots.setEnabled(strToPosLong(editTextUserInput.getText().toString()) > 0);
+        if (newInput) {
+            editTextUserInput.setText("");
+            buttonCalculateRoots.setEnabled(false);
+        } else {
+            buttonCalculateRoots.setEnabled(strToPosLong(editTextUserInput.getText().toString()) > 0);
+        }
     }
 
     private void startCalculationChangeStates() {

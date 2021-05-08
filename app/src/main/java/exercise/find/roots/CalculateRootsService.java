@@ -25,14 +25,14 @@ public class CalculateRootsService extends IntentService {
 
         // private case for even numbers
         if (numberToCalculateRootsFor % 2 == 0) {
-            sendFoundBroadcast(numberToCalculateRootsFor, 2);
+            sendFoundBroadcast(numberToCalculateRootsFor, 2, TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - timeStartMs));
             return;
         }
 
         // search for roots
         for (int i = 3; i < Math.sqrt(numberToCalculateRootsFor) + 1; i += 2) {
             if (numberToCalculateRootsFor % i == 0) {
-                sendFoundBroadcast(numberToCalculateRootsFor, i);
+                sendFoundBroadcast(numberToCalculateRootsFor, i, TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - timeStartMs));
             }
             if (System.currentTimeMillis() - timeStartMs > timeToCalcMs) {
                 sendStopCalcBroadcast(numberToCalculateRootsFor);
@@ -41,7 +41,7 @@ public class CalculateRootsService extends IntentService {
         }
 
         // the original number is prime
-        sendFoundBroadcast(numberToCalculateRootsFor, numberToCalculateRootsFor);
+        sendFoundBroadcast(numberToCalculateRootsFor, numberToCalculateRootsFor, TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - timeStartMs));
 
 
     /*
@@ -66,12 +66,13 @@ public class CalculateRootsService extends IntentService {
     }
 
 
-    private void sendFoundBroadcast(long origNum, long root1) {
+    private void sendFoundBroadcast(long origNum, long root1, long calculationTimeSec) {
         Log.e("CalculateRootsService", "calculated roots for " + origNum + " successfully");
         Intent intent = new Intent("found_roots");
         intent.putExtra("original_number", origNum);
         intent.putExtra("root1", root1);
         intent.putExtra("root2", origNum / root1);
+        intent.putExtra("calculation_time_seconds", calculationTimeSec);
         sendBroadcast(intent);
     }
 

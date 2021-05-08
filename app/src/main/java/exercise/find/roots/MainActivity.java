@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -36,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         editTextUserInput = findViewById(R.id.editTextInputNumber);
         buttonCalculateRoots = findViewById(R.id.buttonCalculateRoots);
+
+        findViewById(R.id.constraintLayoutMainActivity).setOnClickListener((v) -> {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            editTextUserInput.requestFocus();
+            imm.hideSoftInputFromWindow(editTextUserInput.getWindowToken(), 0);
+            editTextUserInput.clearFocus();
+        });
 
         // set initial UI:
         progressBar.setVisibility(View.GONE); // hide progress
@@ -81,13 +89,13 @@ public class MainActivity extends AppCompatActivity {
                 if (incomingIntent == null || !incomingIntent.getAction().equals("found_roots"))
                     return;
                 // success finding roots!
-                endCalculationChangeStates(true);
                 Intent successIntent = new Intent(MainActivity.this, SuccessScreenActivity.class);
                 successIntent.putExtra("original_number", incomingIntent.getLongExtra("original_number", -1));
                 successIntent.putExtra("root1", incomingIntent.getLongExtra("root1", -1));
                 successIntent.putExtra("root2", incomingIntent.getLongExtra("root2", -1));
                 successIntent.putExtra("calculation_time_seconds", incomingIntent.getDoubleExtra("calculation_time_seconds", -1));
                 startActivity(successIntent);
+                endCalculationChangeStates(true);
             }
         };
         registerReceiver(broadcastReceiverForSuccess, new IntentFilter("found_roots"));

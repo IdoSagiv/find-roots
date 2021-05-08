@@ -210,7 +210,7 @@ public class MainActivityTest extends TestCase {
         mainActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // test: make sure that the progress bar is displayed
-        String oldText = "bad input";
+        String oldText = "-1";
         inputEditText.setText(oldText);
         boolean oldEditTextEnabled = inputEditText.isEnabled();
         boolean oldButtonEnabled = button.isEnabled();

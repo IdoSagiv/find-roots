@@ -1,6 +1,6 @@
 # Find Roots
-An Android exercise for developers teaching how to play around with intents, activities,
-services and broadcast receivers
+An Android exercise for developers teaching how to play around with intents, activities, services and broadcast receivers<br/>
+This app was written as part of PostPc (Android) course of The Hebrew University of Jerusalem.
 
 ## Answer to question
 In order to  let the service run for maximum 200ms in tests environments, but continue to run for
